@@ -70,18 +70,18 @@ transition: all 0.2s;
 }
 .cat-btn.selected { background: var(--primary); border-color: var(--primary); color: white; box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4); }
 ​.numbers {
-display: grid;
-grid-template-columns: repeat(5, 1fr);
-gap: 6px;
-max-height: 260px;
-overflow-y: auto;
-padding: 6px;
-background: rgba(0,0,0,0.2);
-border-radius: 12px;
-border: 1px solid var(--border);
+display: grid !important;
+grid-template-columns: repeat(5, 1fr) !important;
+gap: 6px !important;
+max-height: 280px !important;
+overflow-y: auto !important;
+padding: 8px !important;
+background: rgba(0,0,0,0.3) !important;
+border-radius: 12px !important;
+border: 1px solid var(--border) !important;
 }
 .num {
-aspect-ratio: 1;
+min-height: 50px;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -93,9 +93,8 @@ font-size: 14px;
 cursor: pointer;
 background: var(--input-bg);
 color: var(--text);
-transition: transform 0.1s;
+user-select: none;
 }
-.num:active { transform: scale(0.95); }
 .num.taken {
 background: #27272a;
 color: #71717a;
@@ -117,9 +116,9 @@ max-width: 100%;
 padding: 0 2px;
 }
 .num.selected {
-background: var(--green);
-color: white;
-border-color: var(--green);
+background: var(--green) !important;
+color: white !important;
+border-color: var(--green) !important;
 box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
 }
 ​.tablewrap { overflow-x: auto; margin-top: 8px; }
@@ -215,7 +214,7 @@ const BIN_URL = https://api.jsonbin.io/v3/b/${BIN_ID};
 let selectedSize = 'XL';
 let selectedNum = '';
 let registrations = [];
-​// Initialize numbers immediately upon script load
+​// Render numbers immediately upon script load
 renderNumbers();
 ​async function loadDataFromCloud(){
 try {
@@ -321,8 +320,7 @@ if(!name || !selectedNum){
 alert('Please fill in your name and select a jersey number.');
 return;
 }
-​// Remove existing entry for this person so they can update cleanly
-registrations = registrations.filter(r => r.name.toLowerCase() !== name.toLowerCase());
+​registrations = registrations.filter(r => r.name.toLowerCase() !== name.toLowerCase());
 registrations.push({name, serial, backName, gender: selectedGender, size: selectedSize, num: selectedNum});
 ​await saveDataToCloud();
 ​alert('Jersey selection saved live!');
@@ -361,8 +359,7 @@ renderNumbers();
 renderRoster();
 }
 }
-​// Load cloud data on startup and poll every 8 seconds to ensure live roster sync
-loadDataFromCloud();
+​loadDataFromCloud();
 setInterval(loadDataFromCloud, 8000);
 </script>
 </body>
