@@ -642,36 +642,36 @@ function downloadRosterPDF() {
 
   let y = 25;
 
-  ["Boy", "Girl"].forEach((gender, index) => {
-    const group = sorted.filter(
-      r => String(r.gender).toLowerCase() === gender.toLowerCase()
-    );
+["Boys", "Girls"].forEach((gender, index) => {
+  const group = sorted.filter(
+    r => String(r.gender).toLowerCase() === gender.toLowerCase()
+  );
 
-    if (index === 1 && y > 240) {
-      doc.addPage();
-      y = 20;
-    }
+  if (index === 1 && y > 240) {
+    doc.addPage();
+    y = 20;
+  }
 
-    doc.setFontSize(14);
-    doc.text(gender === "Boy" ? "BOYS" : "GIRLS", 14, y);
+  doc.setFontSize(14);
+  doc.text(gender.toUpperCase(), 14, y);
 
-    doc.autoTable({
-      startY: y + 5,
-      head: [["Serial No.", "Jersey No.", "Name", "Back Name", "Size"]],
-      body: group.map(r => [
-        r.serial || "",
-        r.num || "",
-        r.name || "",
-        r.backName || "",
-        r.size || ""
-      ]),
-      theme: "grid",
-      styles: { fontSize: 9 },
-      headStyles: { fillColor: [35, 55, 85] }
-    });
-
-    y = doc.lastAutoTable.finalY + 15;
+  doc.autoTable({
+    startY: y + 5,
+    head: [["Serial No.", "Jersey No.", "Name", "Back Name", "Size"]],
+    body: group.map(r => [
+      r.serial || "",
+      r.num || "",
+      r.name || "",
+      r.backName || "",
+      r.size || ""
+    ]),
+    theme: "grid",
+    styles: { fontSize: 9 },
+    headStyles: { fillColor: [35, 55, 85] }
   });
+
+  y = doc.lastAutoTable.finalY + 15;
+});
 
   doc.save("MCODS25_Jersey_Roster.pdf");
 }
