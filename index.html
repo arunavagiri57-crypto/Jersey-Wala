@@ -78,15 +78,61 @@
     }
     .cat-btn.selected { background: var(--primary); border-color: var(--primary); color: white; box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4); }
 
-    .numbers { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; max-height: 220px; overflow-y: auto; padding: 4px; background: rgba(0,0,0,0.2); border-radius: 12px; border: 1px solid var(--border); }
+    /* Clean scrollable number grid */
+    .numbers { 
+      display: grid; 
+      grid-template-columns: repeat(5, 1fr); 
+      gap: 8px; 
+      max-height: 260px; 
+      overflow-y: auto; 
+      padding: 6px; 
+      background: rgba(0,0,0,0.2); 
+      border-radius: 12px; 
+      border: 1px solid var(--border); 
+    }
     .num {
-      padding: 10px 0; text-align: center; border: 1px solid var(--border); border-radius: 8px;
-      font-weight: 700; font-size: 13px; cursor: pointer; background: var(--input-bg); color: var(--text);
+      padding: 10px 0; 
+      text-align: center; 
+      border: 1px solid var(--border); 
+      border-radius: 8px;
+      font-weight: 700; 
+      font-size: 13px; 
+      cursor: pointer; 
+      background: var(--input-bg); 
+      color: var(--text);
       transition: transform 0.1s;
+      position: relative;
     }
     .num:active { transform: scale(0.95); }
-    .num.taken { background: #18181b; color: #3f3f46; border-color: #27272a; text-decoration: line-through; cursor: not-allowed; }
-    .num.selected { background: var(--green); color: white; border-color: var(--green); box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4); }
+    
+    /* Taken number styling showing who took it */
+    .num.taken { 
+      background: #18181b; 
+      color: #71717a; 
+      border-color: #27272a; 
+      text-decoration: line-through; 
+      cursor: not-allowed; 
+      font-size: 11px;
+    }
+    .num.taken span {
+      display: block;
+      font-size: 9px;
+      font-weight: 400;
+      text-decoration: none;
+      color: #ef4444;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 2px;
+    }
+    
+    /* Selected number styling */
+    .num.selected { 
+      background: var(--green); 
+      color: white; 
+      border-color: var(--green); 
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4); 
+    }
 
     .tablewrap { overflow-x: auto; margin-top: 8px; }
     table { border-collapse: collapse; width: 100%; font-size: 13px; }
@@ -263,17 +309,25 @@
   function renderNumbers(){
     const grid = document.getElementById('numGrid');
     grid.innerHTML = '';
-    const takenNums = new Set(registrations.filter(r => r.gender === selectedGender).map(r => r.num));
+    
+    // Map taken numbers specifically filtered by the selected category (Boys/Girls)
+    const takenMap = {};
+    registrations.filter(r => r.gender === selectedGender).forEach(r => {
+      takenMap[r.num] = r.name;
+    });
 
     for(let i = 0; i <= 99; i++){
       const numStr = String(i).padStart(2, '0');
       const div = document.createElement('div');
-      const isTaken = takenNums.has(numStr) && selectedNum !== numStr;
+      const takenBy = takenMap[numStr];
+      const isTaken = takenBy && selectedNum !== numStr;
       
       div.className = 'num ' + (isTaken ? 'taken' : (selectedNum === numStr ? 'selected' : ''));
-      div.textContent = numStr;
       
-      if(!isTaken){
+      if(isTaken){
+        div.innerHTML = `${numStr}<span>${takenBy.split(' ')[0]}</span>`;
+      } else {
+        div.textContent = numStr;
         div.onclick = () => {
           selectedNum = numStr;
           document.getElementById('previewNum').textContent = numStr;
