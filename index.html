@@ -3,1010 +3,606 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MCODS '25 Jerseys</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MCODS '25 Jersey Registration</title>
 
 <style>
-:root {
-    --bg: #09090b;
-    --card-bg: #18181b;
-    --input-bg: #27272a;
-    --border: #3f3f46;
-    --text: #fafafa;
-    --muted: #a1a1aa;
-    --primary: #6366f1;
-    --primary-hover: #4f46e5;
-    --green: #10b981;
-    --red: #ef4444;
-}
-
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
-
-body {
-    margin: 0;
-    background: var(--bg);
-    font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    color: var(--text);
-    padding-bottom: 40px;
-}
-
-.wrap {
-    max-width: 440px;
-    margin: 0 auto;
-    padding: 20px 16px;
-}
-
-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-h1 {
-    font-size: 22px;
-    margin: 0 0 6px;
-    font-weight: 800;
-    letter-spacing: -.5px;
-    background: linear-gradient(to right, #818cf8, #c084fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-header p {
-    margin: 0;
-    color: var(--muted);
-    font-size: 13px;
-}
-
-.tabs {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 16px;
-    background: var(--card-bg);
-    padding: 5px;
-    border-radius: 14px;
-    border: 1px solid var(--border);
-}
-
-.tab {
-    flex: 1;
-    border: 0;
-    background: transparent;
-    padding: 10px;
-    border-radius: 10px;
-    font-weight: 600;
-    color: var(--muted);
-    cursor: pointer;
-    text-align: center;
-    font-size: 13px;
-}
-
-.tab.active {
-    background: var(--primary);
-    color: white;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, .4);
-}
-
-.card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 20px;
-    margin-bottom: 16px;
-    box-shadow: 0 10px 25px -5px rgba(0,0,0,.3);
-}
-
-h2 {
-    font-size: 16px;
-    margin: 0 0 14px;
-    font-weight: 700;
-}
-
-label {
-    display: block;
-    font-weight: 600;
-    font-size: 11px;
-    color: var(--muted);
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: .5px;
-}
-
-input {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: var(--input-bg);
-    font: inherit;
-    color: var(--text);
-    outline: none;
-}
-
-input:focus {
-    border-color: var(--primary);
-}
-
-.field {
-    margin-bottom: 16px;
-}
-
-.btn {
-    background: var(--primary);
-    color: white;
-    border: 0;
-    border-radius: 12px;
-    padding: 14px 16px;
-    font-weight: 700;
-    font-size: 14px;
-    cursor: pointer;
-    width: 100%;
-    text-align: center;
-    transition: background .2s, transform .1s;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, .3);
-}
-
-.btn:active {
-    transform: scale(.98);
-}
-
-.btn:hover {
-    background: var(--primary-hover);
-}
-
-.btn:disabled {
-    opacity: .6;
-    cursor: wait;
-}
-
-.btn.danger {
-    background: rgba(239, 68, 68, .15);
-    color: var(--red);
-    width: auto;
-    padding: 6px 12px;
-    font-size: 12px;
-    box-shadow: none;
-}
-
-.jersey-preview {
-    background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 18px;
-    text-align: center;
-    margin-bottom: 16px;
-}
-
-.jersey-svg-wrap {
-    width: 110px;
-    margin: 0 auto 6px;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,.4));
-}
-
-.jersey-svg-wrap svg {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.preview-name {
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 2px;
-    color: #a1a1aa;
-    text-transform: uppercase;
-    margin-bottom: 2px;
-}
-
-.preview-num {
-    font-size: 36px;
-    font-weight: 900;
-    color: white;
-    line-height: 1;
-    letter-spacing: -1px;
-}
-
-.size-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 6px;
-}
-
-.size-pill {
-    background: var(--input-bg);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 0;
-    text-align: center;
-    font-weight: 700;
-    font-size: 12px;
-    cursor: pointer;
-    color: var(--text);
-}
-
-.size-pill.selected {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: white;
-    box-shadow: 0 2px 8px rgba(99, 102, 241, .4);
-}
-
-.cat-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-}
-
-.cat-btn {
-    background: var(--input-bg);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px;
-    text-align: center;
-    font-weight: 700;
-    cursor: pointer;
-    color: var(--muted);
-    font-size: 13px;
-}
-
-.cat-btn.selected {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: white;
-    box-shadow: 0 2px 8px rgba(99, 102, 241, .4);
-}
-
-.numbers {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 6px;
-    max-height: 280px;
-    overflow-y: auto;
-    padding: 8px;
-    background: rgba(0,0,0,.3);
-    border-radius: 12px;
-    border: 1px solid var(--border);
-}
-
-.num {
-    min-height: 44px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 13px;
-    cursor: pointer;
-    background: var(--input-bg);
-    color: var(--text);
-}
-
-.num.taken {
-    background: #27272a;
-    color: #71717a;
-    border-color: #3f3f46;
-    text-decoration: line-through;
-    cursor: not-allowed;
-    font-size: 11px;
-}
-
-.num.taken span {
-    display: block;
-    font-size: 8px;
-    font-weight: 400;
-    text-decoration: none;
-    color: #ef4444;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    padding: 0 2px;
-}
-
-.num.selected {
-    background: var(--green);
-    color: white;
-    border-color: var(--green);
-    box-shadow: 0 2px 8px rgba(16, 185, 129, .4);
-}
-
-.tablewrap {
-    overflow-x: auto;
-    margin-top: 8px;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-    font-size: 13px;
-}
-
-th, td {
-    text-align: left;
-    padding: 12px 10px;
-    border-bottom: 1px solid var(--border);
-    white-space: nowrap;
-}
-
-th {
-    color: var(--muted);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: .5px;
-}
-
-.hidden {
-    display: none !important;
-}
-
-.notice {
-    font-size: 12px;
-    color: var(--green);
-    margin-bottom: 12px;
-    font-weight: 600;
-    background: rgba(16, 185, 129, .1);
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid rgba(16, 185, 129, .2);
-    display: none;
-}
-
-.sync-status {
-    font-size: 11px;
-    color: var(--muted);
-    text-align: right;
-    margin-top: 10px;
-    font-weight: 500;
-}
-
-.roster-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-}
-
-.roster-heading h2 {
-    margin: 0;
-}
-
+*{box-sizing:border-box}
+body{margin:0;background:#0b1020;color:#f8fafc;font-family:Arial,sans-serif;padding:20px 14px 45px}
+.container{max-width:520px;margin:auto}
+header{text-align:center;margin:8px 0 22px}
+h1{font-size:25px;margin:0 0 7px;color:#a5b4fc}
+header p,.muted{color:#a1a1aa;font-size:13px}
+.card{background:#171e30;border:1px solid #303a50;border-radius:16px;padding:17px;margin-bottom:15px}
+h2{font-size:17px;margin:0 0 15px}
+label{display:block;font-size:12px;color:#cbd5e1;margin:0 0 7px;font-weight:bold}
+input{width:100%;padding:13px;border-radius:10px;border:1px solid #3d4961;background:#0e1628;color:white;font-size:16px;outline:none}
+input:focus{border-color:#818cf8}
+.field{margin-bottom:15px}
+.gender,.sizes{display:grid;gap:9px}
+.gender{grid-template-columns:1fr 1fr}
+.sizes{grid-template-columns:repeat(6,1fr)}
+.choice{border:1px solid #45516a;background:#202b40;color:#dbeafe;border-radius:10px;padding:12px 5px;text-align:center;font-weight:bold;cursor:pointer;user-select:none}
+.choice.active{background:#4f46e5;border-color:#818cf8;color:white}
+.numbers{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;max-height:330px;overflow-y:auto;padding:3px}
+.num{min-height:47px;border:1px solid #45516a;background:#202b40;color:white;border-radius:9px;font-size:14px;font-weight:bold;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.num small{font-size:9px;font-weight:normal;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.num.taken{background:#303542;color:#9299a8;border-color:#414756;cursor:not-allowed}
+.num.selected{background:#059669;border-color:#34d399;color:white}
+.btn{width:100%;border:0;border-radius:11px;background:#4f46e5;color:white;padding:14px;font-size:15px;font-weight:bold;cursor:pointer}
+.btn:disabled{opacity:.55;cursor:wait}
+.btn.secondary{background:#26344d;margin-top:10px}
+.btn.release{width:auto;padding:7px 10px;background:#7f1d1d;font-size:12px}
+.preview{background:#111a2d;border:1px solid #303a50;border-radius:13px;text-align:center;padding:14px;margin-bottom:16px}
+.preview-name{font-size:12px;letter-spacing:3px;color:#cbd5e1;font-weight:bold}
+.preview-number{font-size:42px;font-weight:900;line-height:1.2}
+.status{font-size:12px;color:#cbd5e1;margin-top:12px;overflow-wrap:anywhere}
+.status.error{color:#fca5a5}
+.status.good{color:#86efac}
+.notice{display:none;background:#263b32;color:#a7f3d0;border:1px solid #34765c;border-radius:9px;padding:10px;font-size:12px;margin-bottom:12px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.tab{border:1px solid #45516a;background:#202b40;color:#dbeafe;border-radius:10px;padding:12px;font-weight:bold;cursor:pointer}
+.tab.active{background:#4f46e5;border-color:#818cf8;color:white}
+.hidden{display:none!important}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th,td{text-align:left;padding:10px 7px;border-bottom:1px solid #354057;white-space:nowrap}
+th{color:#a5b4fc}
+.empty{text-align:center;color:#a1a1aa;padding:20px}
+.legend{font-size:11px;color:#a1a1aa;margin:8px 0 12px}
 </style>
 </head>
 
 <body>
-
-<div class="wrap">
+<div class="container">
 
 <header>
-    <h1>MCODS '25 Jerseys</h1>
-    <p>Select your number & size. Live cloud sync.</p>
+  <h1>MCODS '25 JERSEYS</h1>
+  <p>Choose your jersey number and size</p>
 </header>
 
 <div class="tabs">
-
-    <button class="tab active" id="pickTab" onclick="switchTab('pick')">
-        Pick Number
-    </button>
-
-    <button class="tab" id="rosterTab" onclick="switchTab('roster')">
-        Live Roster (<span id="rosterCount">0</span>)
-    </button>
-
+  <button class="tab active" id="pickTab" type="button">Select Jersey</button>
+  <button class="tab" id="rosterTab" type="button">Live Roster (<span id="count">0</span>)</button>
 </div>
 
+<section id="pickSection">
 
-<!-- NUMBER SELECTION SECTION -->
-
-<div id="pickSection">
-
-    <div class="jersey-preview">
-
-        <div class="jersey-svg-wrap">
-
-            <svg viewBox="0 0 200 170" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-                <path d="M60 15L35 35L15 65L45 80L55 55L55 155H145V55L155 80L185 65L165 35L140 15H115C115 25 85 25 85 15H60Z" fill="#6366f1"/>
-
-                <path d="M85 15C85 25 115 25 115 15H125L140 15L165 35L185 65L155 80L145 55V155H55V55L45 80L15 65L35 35L60 15H75C75 22 85 22 85 15Z" stroke="#fafafa" stroke-width="3" stroke-linejoin="round"/>
-
-            </svg>
-
-        </div>
-
-        <div class="preview-name" id="previewName">NAME</div>
-        <div class="preview-num" id="previewNum">00</div>
-
+  <div class="card">
+    <div class="preview">
+      <div class="preview-name" id="previewName">YOUR NAME</div>
+      <div class="preview-number" id="previewNumber">00</div>
     </div>
 
+    <div class="notice" id="editNotice">Existing registration found. Saving will update it.</div>
 
-    <div class="card">
-
-        <div class="notice" id="editNotice">
-            Existing registration found! Saving will update your choice.
-        </div>
-
-
-        <div class="field">
-
-            <label>Your full name</label>
-
-            <input
-                id="userName"
-                placeholder="Enter your full name"
-                oninput="checkExistingUser()"
-            >
-
-        </div>
-
-
-        <div class="field">
-
-            <label>Serial no.</label>
-
-            <input id="serialNo" placeholder="e.g. 55">
-
-        </div>
-
-
-        <div class="field">
-
-            <label>Name on back</label>
-
-            <input
-                id="nameOnBack"
-                placeholder="e.g. GIRI"
-                oninput="updatePreviewName()"
-            >
-
-        </div>
-
-
-        <div class="field">
-
-            <label>Boys or Girls</label>
-
-            <div class="cat-grid">
-
-                <div
-                    class="cat-btn selected"
-                    id="btnBoys"
-                    onclick="setGender('Boys')"
-                >
-                    Boys
-                </div>
-
-                <div
-                    class="cat-btn"
-                    id="btnGirls"
-                    onclick="setGender('Girls')"
-                >
-                    Girls
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="field">
-
-            <label>Shirt size</label>
-
-            <div class="size-grid">
-
-                <div class="size-pill" onclick="setSize('S')">S</div>
-                <div class="size-pill" onclick="setSize('M')">M</div>
-                <div class="size-pill" onclick="setSize('L')">L</div>
-                <div class="size-pill selected" onclick="setSize('XL')">XL</div>
-                <div class="size-pill" onclick="setSize('XXL')">XXL</div>
-                <div class="size-pill" onclick="setSize('XXXL')">3XL</div>
-
-            </div>
-
-        </div>
-
-
-        <div class="field">
-
-            <label>Jersey Number (00–99)</label>
-
-            <p style="color:#a1a1aa;font-size:11px;margin:0 0 10px;">
-                Boys and Girls have separate number pools.
-                Both categories can select the same number.
-            </p>
-
-            <div class="numbers" id="numGrid"></div>
-
-        </div>
-
-
-        <button class="btn" id="saveBtn" onclick="saveSelection()">
-            Save Selection
-        </button>
-
-        <div class="sync-status" id="syncStatus">
-            Connecting to cloud...
-        </div>
-
+    <div class="field">
+      <label for="fullName">YOUR FULL NAME</label>
+      <input id="fullName" type="text" placeholder="Enter your full name" autocomplete="name">
     </div>
 
-</div>
-
-
-<!-- LIVE ROSTER SECTION -->
-
-<div id="rosterSection" class="hidden">
-
-    <div class="card">
-
-        <div class="roster-heading">
-            <h2>Registered Roster</h2>
-        </div>
-
-        <div class="tablewrap">
-
-            <table>
-
-                <thead>
-                    <tr>
-                        <th>Serial</th>
-                        <th>No.</th>
-                        <th>Name</th>
-                        <th>Back</th>
-                        <th>Size</th>
-                        <th>Cat</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-
-                <tbody id="rosterRows">
-
-                    <tr>
-                        <td colspan="7" style="text-align:center;color:var(--muted);">
-                            Loading live roster...
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-        <button
-            class="btn"
-            onclick="loadDataFromCloud()"
-            style="margin-top:16px;"
-        >
-            Refresh Roster
-        </button>
-
+    <div class="field">
+      <label for="serial">SERIAL NUMBER</label>
+      <input id="serial" type="text" placeholder="Enter your serial number">
     </div>
 
-</div>
+    <div class="field">
+      <label for="backName">NAME TO PRINT ON JERSEY</label>
+      <input id="backName" type="text" placeholder="Example: GIRI">
+    </div>
+
+    <div class="field">
+      <label>SELECT CATEGORY</label>
+      <div class="gender">
+        <button class="choice active" id="boysBtn" type="button">BOYS</button>
+        <button class="choice" id="girlsBtn" type="button">GIRLS</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>SELECT SIZE</label>
+      <div class="sizes" id="sizeChoices">
+        <button class="choice" type="button" data-size="S">S</button>
+        <button class="choice" type="button" data-size="M">M</button>
+        <button class="choice" type="button" data-size="L">L</button>
+        <button class="choice active" type="button" data-size="XL">XL</button>
+        <button class="choice" type="button" data-size="XXL">2XL</button>
+        <button class="choice" type="button" data-size="XXXL">3XL</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>CHOOSE YOUR JERSEY NUMBER</label>
+      <p class="legend">Available numbers are selectable. Grey numbers are already taken in that category. Boys and Girls have separate number lists.</p>
+      <div class="numbers" id="numberGrid"></div>
+    </div>
+
+    <button class="btn" id="saveBtn" type="button">SAVE MY JERSEY</button>
+    <div class="status" id="cloudStatus">Showing number grid. Connecting to cloud...</div>
+  </div>
+
+</section>
+
+<section id="rosterSection" class="hidden">
+  <div class="card">
+    <h2>Registered Jerseys</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Serial</th>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Back</th>
+            <th>Size</th>
+            <th>Category</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="rosterRows">
+          <tr><td colspan="7" class="empty">Loading registrations...</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn secondary" id="refreshBtn" type="button">REFRESH ROSTER</button>
+    <div class="status" id="rosterStatus"></div>
+  </div>
+</section>
 
 </div>
-
 
 <script>
+"use strict";
 
-// =========================================
-// JSONBIN DATABASE DETAILS
-// YOUR ORIGINAL DATABASE AND API KEY
-// =========================================
+/* YOUR EXISTING JSONBIN DATABASE */
+const BIN_ID = "6af1c19affd5d16053b373d3";
+const API_KEY = "2a10$6l1h70b4HguEHUnxYngrW05DmXbwscL27.q/A6sylhNWpc.VLQ55oq";
+const BIN_URL = "https://api.jsonbin.io/v3/b/" + BIN_ID;
 
-const BIN_ID = '6af1c19affd5d16053b373d3';
-
-const API_KEY = '2a10$6l1h70b4HguEHUnxYngrW05DmXbwscL27.q/A6sylhNWpc.VLQ55oq';
-
-const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-
-
-// =========================================
-// GLOBAL VARIABLES
-// =========================================
-
-let selectedGender = 'Boys';
-let selectedSize = 'XL';
-let selectedNum = '';
-
+/* WEBSITE STATE */
 let registrations = [];
+let selectedGender = "Boys";
+let selectedSize = "XL";
+let selectedNumber = "";
+let saving = false;
+let cloudLoaded = false;
+let refreshInProgress = false;
 
-let isSaving = false;
+const $ = id => document.getElementById(id);
 
-
-// =========================================
-// INITIALIZE WEBSITE
-// =========================================
-
-renderNumbers();
-
-
-// =========================================
-// LOAD DATA FROM CLOUD
-// =========================================
-
-async function loadDataFromCloud() {
-
-    if (isSaving) return;
-
-    try {
-
-        const res = await fetch(BIN_URL + '/latest', {
-
-            headers: {
-                'X-Master-Key': API_KEY
-            },
-
-            cache: 'no-store'
-
-        });
-
-        if (!res.ok) {
-            throw new Error('Cloud fetch failed');
-        }
-
-        const data = await res.json();
-
-        registrations = Array.isArray(data.record.registrations)
-            ? data.record.registrations
-            : [];
-
-        renderNumbers();
-
-        renderRoster();
-
-        document.getElementById('syncStatus').textContent =
-            '✅ Live synced with cloud';
-
-    } catch (error) {
-
-        document.getElementById('syncStatus').textContent =
-            '⚠️ Cloud sync warning';
-
-        renderNumbers();
-
-        renderRoster();
-
-        console.error(error);
-
-    }
-
+function setStatus(message, type) {
+  const el = $("cloudStatus");
+  el.textContent = message;
+  el.className = "status " + (type || "");
 }
 
-
-// =========================================
-// SAVE DATA TO CLOUD
-// =========================================
-
-async function saveDataToCloud() {
-
-    document.getElementById('syncStatus').textContent =
-        '⏳ Saving to cloud...';
-
-    try {
-
-        const res = await fetch(BIN_URL, {
-
-            method: 'PUT',
-
-            headers: {
-
-                'Content-Type': 'application/json',
-
-                'X-Master-Key': API_KEY
-
-            },
-
-            body: JSON.stringify({
-
-                registrations: registrations
-
-            })
-
-        });
-
-        if (!res.ok) {
-            throw new Error('Cloud save failed');
-        }
-
-        document.getElementById('syncStatus').textContent =
-            '✅ Live synced with cloud';
-
-        return true;
-
-    } catch (error) {
-
-        document.getElementById('syncStatus').textContent =
-            '❌ Failed to save online';
-
-        console.error(error);
-
-        return false;
-
-    }
-
+function cleanNumber(value) {
+  return String(value).padStart(2, "0");
 }
 
-
-// =========================================
-// TAB SWITCHING
-// =========================================
-
-function switchTab(tab) {
-
-    document.getElementById('pickSection').classList.toggle(
-        'hidden',
-        tab !== 'pick'
-    );
-
-    document.getElementById('rosterSection').classList.toggle(
-        'hidden',
-        tab !== 'roster'
-    );
-
-    document.getElementById('pickTab').classList.toggle(
-        'active',
-        tab === 'pick'
-    );
-
-    document.getElementById('rosterTab').classList.toggle(
-        'active',
-        tab === 'roster'
-    );
-
-    if (tab === 'roster') {
-        loadDataFromCloud();
-    }
-
+function currentName() {
+  return $("fullName").value.trim().toLowerCase();
 }
 
+/* CATEGORY BUTTONS */
+function chooseGender(gender) {
+  selectedGender = gender;
+  selectedNumber = "";
 
-// =========================================
-// GENDER SELECTION
-// =========================================
+  $("boysBtn").classList.toggle("active", gender === "Boys");
+  $("girlsBtn").classList.toggle("active", gender === "Girls");
 
-function setGender(g) {
-
-    selectedGender = g;
-
-    selectedNum = '';
-
-    document.getElementById('previewNum').textContent = '00';
-
-    document.getElementById('btnBoys').classList.toggle(
-        'selected',
-        g === 'Boys'
-    );
-
-    document.getElementById('btnGirls').classList.toggle(
-        'selected',
-        g === 'Girls'
-    );
-
-    renderNumbers();
-
+  $("previewNumber").textContent = "00";
+  renderNumbers();
 }
 
+$("boysBtn").addEventListener("click", () => chooseGender("Boys"));
+$("girlsBtn").addEventListener("click", () => chooseGender("Girls"));
 
-// =========================================
-// SIZE SELECTION
-// =========================================
-
-function setSize(s) {
-
-    selectedSize = s;
-
-    document.querySelectorAll('.size-pill').forEach(el => {
-
-        const value = el.textContent === '3XL'
-            ? 'XXXL'
-            : el.textContent;
-
-        el.classList.toggle('selected', value === s);
-
+/* SIZE BUTTONS */
+document.querySelectorAll("[data-size]").forEach(button => {
+  button.addEventListener("click", () => {
+    selectedSize = button.dataset.size;
+    document.querySelectorAll("[data-size]").forEach(item => {
+      item.classList.toggle("active", item === button);
     });
+  });
+});
 
+/* PREVIEW */
+function updateNamePreview() {
+  const back = $("backName").value.trim();
+  const full = $("fullName").value.trim();
+  $("previewName").textContent = (back || full || "YOUR NAME").toUpperCase();
 }
 
+$("fullName").addEventListener("input", updateNamePreview);
+$("backName").addEventListener("input", updateNamePreview);
 
-// =========================================
-// NAME PREVIEW
-// =========================================
-
-function updatePreviewName() {
-
-    const backName = document.getElementById('nameOnBack')
-        .value.trim();
-
-    const fullName = document.getElementById('userName')
-        .value.trim();
-
-    document.getElementById('previewName').textContent =
-        (backName || fullName.split(' ')[0] || 'NAME').toUpperCase();
-
-}
-
-
-// =========================================
-// CHECK EXISTING REGISTRATION
-// =========================================
-
-function checkExistingUser() {
-
-    const name = document.getElementById('userName')
-        .value.trim().toLowerCase();
-
-    const notice = document.getElementById('editNotice');
-
-    if (name.length < 2) {
-
-        notice.style.display = 'none';
-
-        updatePreviewName();
-
-        renderNumbers();
-
-        return;
-
-    }
-
-    const existing = registrations.find(r =>
-        String(r.name || '').trim().toLowerCase() === name
-    );
-
-    if (existing) {
-
-        notice.style.display = 'block';
-
-        notice.textContent =
-            `ℹ️ Welcome back, ${existing.name}! Saving will update your choice.`;
-
-        // Load previously saved information.
-
-        document.getElementById('serialNo').value =
-            existing.serial || '';
-
-        document.getElementById('nameOnBack').value =
-            existing.backName || '';
-
-        selectedGender = existing.gender || 'Boys';
-
-        selectedSize = existing.size || 'XL';
-
-        selectedNum = String(existing.num).padStart(2, '0');
-
-        document.getElementById('previewNum').textContent =
-            selectedNum;
-
-        document.getElementById('btnBoys').classList.toggle(
-            'selected',
-            selectedGender === 'Boys'
-        );
-
-        document.getElementById('btnGirls').classList.toggle(
-            'selected',
-            selectedGender === 'Girls'
-        );
-
-        setSize(selectedSize);
-
-        updatePreviewName();
-
-    } else {
-
-        notice.style.display = 'none';
-
-        updatePreviewName();
-
-    }
-
-    renderNumbers();
-
-}
-
-
-// =========================================
-// RENDER NUMBER GRID
-// BOYS AND GIRLS HAVE SEPARATE 00-99 POOLS
-// =========================================
-
+/* NUMBER GRID - THIS RENDERS BEFORE CLOUD CONNECTION */
 function renderNumbers() {
+  const grid = $("numberGrid");
+  grid.replaceChildren();
 
-    const grid = document.getElementById('numGrid');
+  const taken = new Map();
+  const name = currentName();
 
-    if (!grid) return;
+  registrations.forEach(person => {
+    if (
+      person.gender === selectedGender &&
+      String(person.name || "").trim().toLowerCase() !== name
+    ) {
+      taken.set(cleanNumber(person.num), person.name || "Taken");
+    }
+  });
 
-    grid.innerHTML = '';
+  for (let i = 0; i <= 99; i++) {
+    const number = cleanNumber(i);
+    const owner = taken.get(number);
+    const button = document.createElement("button");
 
-    const currentName = document.getElementById('userName')
-        .value.trim().toLowerCase();
+    button.type = "button";
+    button.className = "num";
 
-    // Only check numbers belonging to the selected gender.
+    if (owner) {
+      button.classList.add("taken");
+      button.disabled = true;
 
-    const takenMap = {};
+      const numberText = document.createElement("span");
+      numberText.textContent = number;
 
-    registrations.forEach(r => {
+      const ownerText = document.createElement("small");
+      ownerText.textContent = String(owner).split(" ")[0];
 
-        if (
-            r.gender === selectedGender &&
-            String(r.name || '').trim().toLowerCase() !== currentName
-        ) {
+      button.append(numberText, ownerText);
+    } else {
+      button.textContent = number;
 
-            const number = String(r.num).padStart(2, '0');
+      if (selectedNumber === number) {
+        button.classList.add("selected");
+      }
 
-            takenMap[number] = r.name;
-
-        }
-
-    });
-
-    // Generate numbers from 00 to 99.
-
-    for (let i = 0; i <= 99; i++) {
-
-        const numStr = String(i).padStart(2, '0');
-
-        const div = document.createElement('div');
-
-        const takenBy = takenMap[numStr];
-
-        if (takenBy) {
-
-            div.className = 'num taken';
-
-            const number = document.createTextNode(numStr);
-
-            const name = document.createElement('span');
-
-            name.textContent = String(takenBy).split(' ')[0];
-
-            div.append(number, name);
-
-        } else {
-
-            div.className = 'num' +
-                (selectedNum === numStr ? ' selected' : '');
-
-            div.textContent = numStr;
-
-            div.onclick = () => {
-
-                selectedNum = numStr;
-
-                document.getElementById('previewNum').textContent =
-                    numStr;
-
-                renderNumbers();
-
-            };
-
-        }
-
-        grid.appendChild(div);
-
+      button.addEventListener("click", () => {
+        selectedNumber = number;
+        $("previewNumber").textContent = number;
+        renderNumbers();
+      });
     }
 
+    grid.appendChild(button);
+  }
 }
 
+/* LOAD AN EXISTING REGISTRATION WHEN NAME IS ENTERED */
+let lastLoadedName = "";
 
-// =========================================
-// SAVE SELECTION
-// =========================================
+$("fullName").addEventListener("change", () => {
+  const name = currentName();
 
+  if (!name) return;
+
+  const existing = registrations.find(person =>
+    String(person.name || "").trim().toLowerCase() === name
+  );
+
+  if (!existing) {
+    $("editNotice").style.display = "none";
+    lastLoadedName = "";
+    renderNumbers();
+    return;
+  }
+
+  if (lastLoadedName === name) return;
+  lastLoadedName = name;
+
+  $("editNotice").style.display = "block";
+  $("serial").value = existing.serial || "";
+  $("backName").value = existing.backName || "";
+
+  selectedGender = existing.gender === "Girls" ? "Girls" : "Boys";
+  selectedSize = existing.size || "XL";
+  selectedNumber = cleanNumber(existing.num);
+
+  $("boysBtn").classList.toggle("active", selectedGender === "Boys");
+  $("girlsBtn").classList.toggle("active", selectedGender === "Girls");
+
+  document.querySelectorAll("[data-size]").forEach(button => {
+    button.classList.toggle("active", button.dataset.size === selectedSize);
+  });
+
+  $("previewNumber").textContent = selectedNumber;
+  updateNamePreview();
+  renderNumbers();
+});
+
+/* CLOUD REQUEST WITH TIMEOUT */
+async function cloudRequest(url, options = {}) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 10000);
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+      headers: {
+        "X-Master-Key": API_KEY,
+        ...(options.headers || {})
+      },
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      throw new Error("Server returned HTTP " + response.status);
+    }
+
+    return await response.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/* LOAD ROSTER */
+async function loadCloudData(showMessage = true) {
+  if (refreshInProgress || saving) return;
+
+  refreshInProgress = true;
+
+  try {
+    const result = await cloudRequest(BIN_URL + "/latest");
+    const list = result && result.record && result.record.registrations;
+
+    registrations = Array.isArray(list) ? list : [];
+    cloudLoaded = true;
+
+    renderNumbers();
+    renderRoster();
+
+    if (showMessage) setStatus("✓ Connected. Roster updated.", "good");
+    $("rosterStatus").textContent = "Cloud roster updated.";
+  } catch (error) {
+    console.error("Cloud load error:", error);
+    if (showMessage) {
+      setStatus(
+        "Cloud connection failed: " + error.message +
+        ". Number buttons still work, but online saving needs a connection.",
+        "error"
+      );
+    }
+    $("rosterStatus").textContent = "Could not load the cloud roster.";
+  } finally {
+    refreshInProgress = false;
+  }
+}
+
+/* SAVE ROSTER */
+async function writeCloudData(list) {
+  const result = await cloudRequest(BIN_URL, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ registrations: list })
+  });
+
+  return result;
+}
+
+/* SAVE REGISTRATION */
 async function saveSelection() {
+  if (saving) return;
 
-    if (isSaving) return;
+  const name = $("fullName").value.trim();
+  const serial = $("serial").value.trim();
+  const backName = $("backName").value.trim() || name;
 
-    const name = document.getElementById('userName')
-        .value.trim();
+  if (!name) {
+    alert("Please enter your full name.");
+    $("fullName").focus();
+    return;
+  }
 
-    const serial = document.getElementById('serialNo')
-        .value.trim();
+  if (!selectedNumber) {
+    alert("Please select a jersey number.");
+    return;
+  }
 
-    const backName =
-     
+  if (!cloudLoaded) {
+    alert("The website has not connected to the cloud yet. Please check your internet connection and try again.");
+    return;
+  }
+
+  saving = true;
+  $("saveBtn").disabled = true;
+  $("saveBtn").textContent = "SAVING...";
+  setStatus("Checking number availability...", "");
+
+  try {
+    /* Fetch latest data immediately before saving */
+    const latest = await cloudRequest(BIN_URL + "/latest");
+    const latestList = latest?.record?.registrations;
+    const latestRegistrations = Array.isArray(latestList) ? latestList : [];
+
+    const takenBy = latestRegistrations.find(person =>
+      person.gender === selectedGender &&
+      cleanNumber(person.num) === selectedNumber &&
+      String(person.name || "").trim().toLowerCase() !== name.toLowerCase()
+    );
+
+    if (takenBy) {
+      registrations = latestRegistrations;
+      renderNumbers();
+      renderRoster();
+      selectedNumber = "";
+      $("previewNumber").textContent = "00";
+      alert("Number already taken by " + takenBy.name + " in " + selectedGender + ". Please choose another number.");
+      return;
+    }
+
+    /* Remove this person's old entry, then add the updated one */
+    const updated = latestRegistrations.filter(person =>
+      String(person.name || "").trim().toLowerCase() !== name.toLowerCase()
+    );
+
+    updated.push({
+      name: name,
+      serial: serial,
+      backName: backName,
+      gender: selectedGender,
+      size: selectedSize,
+      num: selectedNumber
+    });
+
+    await writeCloudData(updated);
+
+    registrations = updated;
+    renderNumbers();
+    renderRoster();
+
+    setStatus("✓ Your jersey registration has been saved!", "good");
+    alert("Your jersey selection has been saved successfully!");
+
+    $("fullName").value = "";
+    $("serial").value = "";
+    $("backName").value = "";
+    $("editNotice").style.display = "none";
+
+    selectedNumber = "";
+    lastLoadedName = "";
+    $("previewNumber").textContent = "00";
+    updateNamePreview();
+    renderNumbers();
+
+    showSection("roster");
+  } catch (error) {
+    console.error("Save error:", error);
+    setStatus("Save failed: " + error.message, "error");
+    alert("Could not save your registration. Please check your internet connection and try again.");
+  } finally {
+    saving = false;
+    $("saveBtn").disabled = false;
+    $("saveBtn").textContent = "SAVE MY JERSEY";
+  }
+}
+
+$("saveBtn").addEventListener("click", saveSelection);
+
+/* ROSTER TABLE */
+function renderRoster() {
+  const tbody = $("rosterRows");
+  tbody.replaceChildren();
+  $("count").textContent = registrations.length;
+
+  if (registrations.length === 0) {
+    const row = document.createElement("tr");
+    const cell = document.createElement("td");
+    cell.colSpan = 7;
+    cell.className = "empty";
+    cell.textContent = "No registrations yet.";
+    row.appendChild(cell);
+    tbody.appendChild(row);
+    return;
+  }
+
+  registrations.forEach((person, index) => {
+    const row = document.createElement("tr");
+
+    [
+      person.serial || "-",
+      cleanNumber(person.num),
+      person.name || "-",
+      person.backName || "-",
+      person.size || "-",
+      person.gender || "-"
+    ].forEach(value => {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.appendChild(cell);
+    });
+
+    const actionCell = document.createElement("td");
+    const releaseButton = document.createElement("button");
+
+    releaseButton.type = "button";
+    releaseButton.className = "btn release";
+    releaseButton.textContent = "Release";
+    releaseButton.addEventListener("click", () => releaseNumber(index));
+
+    actionCell.appendChild(releaseButton);
+    row.appendChild(actionCell);
+    tbody.appendChild(row);
+  });
+}
+
+/* RELEASE NUMBER */
+async function releaseNumber(index) {
+  if (saving) return;
+
+  const person = registrations[index];
+  if (!person) return;
+
+  if (!confirm("Release number " + cleanNumber(person.num) + " for " + person.name + "?")) {
+    return;
+  }
+
+  if (!cloudLoaded) {
+    alert("Cloud is not connected. Cannot release the number yet.");
+    return;
+  }
+
+  saving = true;
+
+  try {
+    const latest = await cloudRequest(BIN_URL + "/latest");
+    const list = Array.isArray(latest?.record?.registrations)
+      ? latest.record.registrations
+      : [];
+
+    const updated = list.filter(item =>
+      !(
+        String(item.name || "").trim().toLowerCase() ===
+        String(person.name || "").trim().toLowerCase()
+      )
+    );
+
+    await writeCloudData(updated);
+
+    registrations = updated;
+    renderNumbers();
+    renderRoster();
+    setStatus("✓ Number released.", "good");
+  } catch (error) {
+    console.error(error);
+    alert("Could not release the number. Please try again.");
+  } finally {
+    saving = false;
+  }
+}
+
+/* SWITCH BETWEEN SECTIONS */
+function showSection(section) {
+  const roster = section === "roster";
+
+  $("pickSection").classList.toggle("hidden", roster);
+  $("rosterSection").classList.toggle("hidden", !roster);
+  $("pickTab").classList.toggle("active", !roster);
+  $("rosterTab").classList.toggle("active", roster);
+
+  if (roster) loadCloudData(true);
+}
+
+$("pickTab").addEventListener("click", () => showSection("pick"));
+$("rosterTab").addEventListener("click", () => showSection("roster"));
+$("refreshBtn").addEventListener("click", () => loadCloudData(true));
+
+/* START THE PAGE: RENDER FIRST, CONNECT SECOND */
+renderNumbers();
+renderRoster();
+setStatus("Number grid ready. Connecting to cloud...", "");
+
+loadCloudData(true);
+
+/* Refresh cloud roster periodically */
+setInterval(() => {
+  if (!document.hidden) loadCloudData(false);
+}, 15000);
+</script>
+</body>
+</html>
