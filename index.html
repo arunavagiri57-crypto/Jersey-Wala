@@ -1,365 +1,1012 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MCODS '25 Jerseys</title>
+
 <style>
 :root {
---bg: #09090b;
---card-bg: #18181b;
---input-bg: #27272a;
---border: #3f3f46;
---text: #fafafa;
---muted: #a1a1aa;
---primary: #6366f1;
---primary-hover: #4f46e5;
---green: #10b981;
---red: #ef4444;
+    --bg: #09090b;
+    --card-bg: #18181b;
+    --input-bg: #27272a;
+    --border: #3f3f46;
+    --text: #fafafa;
+    --muted: #a1a1aa;
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+    --green: #10b981;
+    --red: #ef4444;
 }
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
 body {
-margin: 0; background: var(--bg);
-font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-color: var(--text); padding-bottom: 40px;
+    margin: 0;
+    background: var(--bg);
+    font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--text);
+    padding-bottom: 40px;
 }
-.wrap { max-width: 440px; margin: 0 auto; padding: 20px 16px; }
-​header { text-align: center; margin-bottom: 20px; }
-h1 { font-size: 22px; margin: 0 0 6px; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(to right, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-header p { margin: 0; color: var(--muted); font-size: 13px; }
-​.tabs { display: flex; gap: 6px; margin-bottom: 16px; background: var(--card-bg); padding: 5px; border-radius: 14px; border: 1px solid var(--border); }
-.tab { flex: 1; border: 0; background: transparent; padding: 10px; border-radius: 10px; font-weight: 600; color: var(--muted); cursor: pointer; text-align: center; font-size: 13px; transition: all 0.2s; }
-.tab.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4); }
-​.card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 20px; margin-bottom: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3); }
-h2 { font-size: 16px; margin: 0 0 14px; font-weight: 700; }
-​label { display: block; font-weight: 600; font-size: 11px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.wrap {
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 20px 16px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 22px;
+    margin: 0 0 6px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+    background: linear-gradient(to right, #818cf8, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+header p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+    background: var(--card-bg);
+    padding: 5px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+}
+
+.tab {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    text-align: center;
+    font-size: 13px;
+}
+
+.tab.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, .4);
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,.3);
+}
+
+h2 {
+    font-size: 16px;
+    margin: 0 0 14px;
+    font-weight: 700;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
 input {
-width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px;
-background: var(--input-bg); font: inherit; color: var(--text); outline: none; transition: border-color 0.2s;
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--input-bg);
+    font: inherit;
+    color: var(--text);
+    outline: none;
 }
-input:focus { border-color: var(--primary); }
-.field { margin-bottom: 16px; }
-​.btn {
-background: var(--primary); color: white; border: 0; border-radius: 12px;
-padding: 14px 16px; font-weight: 700; font-size: 14px; cursor: pointer; width: 100%;
-text-align: center; transition: background 0.2s, transform 0.1s; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+
+input:focus {
+    border-color: var(--primary);
 }
-.btn:active { transform: scale(0.98); }
-.btn:hover { background: var(--primary-hover); }
-.btn.danger { background: rgba(239, 68, 68, 0.15); color: var(--red); width: auto; padding: 6px 12px; font-size: 12px; box-shadow: none; }
-​.jersey-preview {
-background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
-border: 1px solid var(--border); border-radius: 16px; padding: 18px; text-align: center; margin-bottom: 16px;
+
+.field {
+    margin-bottom: 16px;
 }
-.jersey-svg-wrap { width: 110px; margin: 0 auto 6px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4)); }
-.jersey-svg-wrap svg { width: 100%; height: auto; display: block; }
-.preview-name { font-size: 11px; font-weight: 800; letter-spacing: 2px; color: #a1a1aa; text-transform: uppercase; margin-bottom: 2px; }
-.preview-num { font-size: 36px; font-weight: 900; color: white; line-height: 1; letter-spacing: -1px; }
-​.size-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+
+.btn {
+    background: var(--primary);
+    color: white;
+    border: 0;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: background .2s, transform .1s;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, .3);
+}
+
+.btn:active {
+    transform: scale(.98);
+}
+
+.btn:hover {
+    background: var(--primary-hover);
+}
+
+.btn:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+.btn.danger {
+    background: rgba(239, 68, 68, .15);
+    color: var(--red);
+    width: auto;
+    padding: 6px 12px;
+    font-size: 12px;
+    box-shadow: none;
+}
+
+.jersey-preview {
+    background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.jersey-svg-wrap {
+    width: 110px;
+    margin: 0 auto 6px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,.4));
+}
+
+.jersey-svg-wrap svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.preview-name {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #a1a1aa;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+.preview-num {
+    font-size: 36px;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+.size-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 6px;
+}
+
 .size-pill {
-background: var(--input-bg); border: 1px solid var(--border); border-radius: 10px;
-padding: 10px 0; text-align: center; font-weight: 700; font-size: 12px; cursor: pointer; color: var(--text);
-transition: all 0.2s;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 0;
+    text-align: center;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    color: var(--text);
 }
-.size-pill.selected { background: var(--primary); border-color: var(--primary); color: white; box-shadow: 0 2px 8px rgba(99, 102, 241,.4); }
-​.cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+.size-pill.selected {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, .4);
+}
+
+.cat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
 .cat-btn {
-background: var(--input-bg); border: 1px solid var(--border); border-radius: 10px;
-padding: 12px; text-align: center; font-weight: 700; cursor: pointer; color: var(--muted); font-size: 13px;
-transition: all 0.2s;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 13px;
 }
-.cat-btn.selected { background: var(--primary); border-color: var(--primary); color: white; box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4); }
-​.numbers {
-display: grid !important;
-grid-template-columns: repeat(5, 1fr) !important;
-gap: 6px !important;
-max-height: 280px !important;
-overflow-y: auto !important;
-padding: 8px !important;
-background: rgba(0,0,0,0.3) !important;
-border-radius: 12px !important;
-border: 1px solid var(--border) !important;
+
+.cat-btn.selected {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, .4);
 }
+
+.numbers {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    max-height: 280px;
+    overflow-y: auto;
+    padding: 8px;
+    background: rgba(0,0,0,.3);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
 .num {
-min-height: 44px !important;
-display: flex !important;
-flex-direction: column !important;
-align-items: center !important;
-justify-content: center !important;
-border: 1px solid var(--border) !important;
-border-radius: 8px !important;
-font-weight: 700 !important;
-font-size: 13px !important;
-cursor: pointer !important;
-background: var(--input-bg) !important;
-color: var(--text) !important;
+    min-height: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    background: var(--input-bg);
+    color: var(--text);
 }
+
 .num.taken {
-background: #27272a !important;
-color: #71717a !important;
-border-color: #3f3f46 !important;
-text-decoration: line-through !important;
-cursor: not-allowed !important;
-font-size: 11px !important;
+    background: #27272a;
+    color: #71717a;
+    border-color: #3f3f46;
+    text-decoration: line-through;
+    cursor: not-allowed;
+    font-size: 11px;
 }
+
 .num.taken span {
-display: block !important;
-font-size: 8px !important;
-font-weight: 400 !important;
-text-decoration: none !important;
-color: #ef4444 !important;
-white-space: nowrap !important;
-overflow: hidden !important;
-text-overflow: ellipsis !important;
-max-width: 100% !important;
-padding: 0 2px !important;
+    display: block;
+    font-size: 8px;
+    font-weight: 400;
+    text-decoration: none;
+    color: #ef4444;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    padding: 0 2px;
 }
+
 .num.selected {
-background: var(--green) !important;
-color: white !important;
-border-color: var(--green) !important;
-box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+    background: var(--green);
+    color: white;
+    border-color: var(--green);
+    box-shadow: 0 2px 8px rgba(16, 185, 129, .4);
 }
-​.tablewrap { overflow-x: auto; margin-top: 8px; }
-table { border-collapse: collapse; width: 100%; font-size: 13px; }
-th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--border); white-space: nowrap; }
-th { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
-.hidden { display: none !important; }
-.notice { font-size: 12px; color: var(--green); margin-bottom: 12px; font-weight: 600; background: rgba(16,185,129,0.1); padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(16,185,129,0.2); display: none; }
-.sync-status { font-size: 11px; color: var(--muted); text-align: right; margin-top: 10px; font-weight: 500; }
+
+.tablewrap {
+    overflow-x: auto;
+    margin-top: 8px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 13px;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+th {
+    color: var(--muted);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.notice {
+    font-size: 12px;
+    color: var(--green);
+    margin-bottom: 12px;
+    font-weight: 600;
+    background: rgba(16, 185, 129, .1);
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(16, 185, 129, .2);
+    display: none;
+}
+
+.sync-status {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+.roster-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.roster-heading h2 {
+    margin: 0;
+}
+
 </style>
 </head>
+
 <body>
+
 <div class="wrap">
+
 <header>
-<h1>MCODS '25 Jerseys</h1>
-<p>Select your number & size. Live cloud sync.</p>
+    <h1>MCODS '25 Jerseys</h1>
+    <p>Select your number & size. Live cloud sync.</p>
 </header>
-​<div class="tabs">
-<button class="tab active" id="pickTab" onclick="switchTab('pick')">Pick Number</button>
-<button class="tab" id="rosterTab" onclick="switchTab('roster')">Live Roster (<span id="rosterCount">0</span>)</button>
+
+<div class="tabs">
+
+    <button class="tab active" id="pickTab" onclick="switchTab('pick')">
+        Pick Number
+    </button>
+
+    <button class="tab" id="rosterTab" onclick="switchTab('roster')">
+        Live Roster (<span id="rosterCount">0</span>)
+    </button>
+
 </div>
-​<div id="pickSection">
-<div class="jersey-preview">
-<div class="jersey-svg-wrap">
-<svg viewBox="0 0 200 170" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M60 15L35 35L15 65L45 80L55 55L55 155H145V55L155 80L185 65L165 35L140 15H115C115 25 85 25 85 15H60Z" fill="#6366f1"/>
-<path d="M85 15C85 25 115 25 115 15H125L140 15L165 35L185 65L155 80L145 55V155H55V55L45 80L15 65L35 35L60 15H75C75 22 85 22 85 15Z" stroke="#fafafa" stroke-width="3" stroke-linejoin="round"/>
-</svg>
+
+
+<!-- NUMBER SELECTION SECTION -->
+
+<div id="pickSection">
+
+    <div class="jersey-preview">
+
+        <div class="jersey-svg-wrap">
+
+            <svg viewBox="0 0 200 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                <path d="M60 15L35 35L15 65L45 80L55 55L55 155H145V55L155 80L185 65L165 35L140 15H115C115 25 85 25 85 15H60Z" fill="#6366f1"/>
+
+                <path d="M85 15C85 25 115 25 115 15H125L140 15L165 35L185 65L155 80L145 55V155H55V55L45 80L15 65L35 35L60 15H75C75 22 85 22 85 15Z" stroke="#fafafa" stroke-width="3" stroke-linejoin="round"/>
+
+            </svg>
+
+        </div>
+
+        <div class="preview-name" id="previewName">NAME</div>
+        <div class="preview-num" id="previewNum">00</div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="notice" id="editNotice">
+            Existing registration found! Saving will update your choice.
+        </div>
+
+
+        <div class="field">
+
+            <label>Your full name</label>
+
+            <input
+                id="userName"
+                placeholder="Enter your full name"
+                oninput="checkExistingUser()"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Serial no.</label>
+
+            <input id="serialNo" placeholder="e.g. 55">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Name on back</label>
+
+            <input
+                id="nameOnBack"
+                placeholder="e.g. GIRI"
+                oninput="updatePreviewName()"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Boys or Girls</label>
+
+            <div class="cat-grid">
+
+                <div
+                    class="cat-btn selected"
+                    id="btnBoys"
+                    onclick="setGender('Boys')"
+                >
+                    Boys
+                </div>
+
+                <div
+                    class="cat-btn"
+                    id="btnGirls"
+                    onclick="setGender('Girls')"
+                >
+                    Girls
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Shirt size</label>
+
+            <div class="size-grid">
+
+                <div class="size-pill" onclick="setSize('S')">S</div>
+                <div class="size-pill" onclick="setSize('M')">M</div>
+                <div class="size-pill" onclick="setSize('L')">L</div>
+                <div class="size-pill selected" onclick="setSize('XL')">XL</div>
+                <div class="size-pill" onclick="setSize('XXL')">XXL</div>
+                <div class="size-pill" onclick="setSize('XXXL')">3XL</div>
+
+            </div>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>Jersey Number (00–99)</label>
+
+            <p style="color:#a1a1aa;font-size:11px;margin:0 0 10px;">
+                Boys and Girls have separate number pools.
+                Both categories can select the same number.
+            </p>
+
+            <div class="numbers" id="numGrid"></div>
+
+        </div>
+
+
+        <button class="btn" id="saveBtn" onclick="saveSelection()">
+            Save Selection
+        </button>
+
+        <div class="sync-status" id="syncStatus">
+            Connecting to cloud...
+        </div>
+
+    </div>
+
 </div>
-<div class="preview-name" id="previewName">NAME</div>
-<div class="preview-num" id="previewNum">00</div>
+
+
+<!-- LIVE ROSTER SECTION -->
+
+<div id="rosterSection" class="hidden">
+
+    <div class="card">
+
+        <div class="roster-heading">
+            <h2>Registered Roster</h2>
+        </div>
+
+        <div class="tablewrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Serial</th>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Back</th>
+                        <th>Size</th>
+                        <th>Cat</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="rosterRows">
+
+                    <tr>
+                        <td colspan="7" style="text-align:center;color:var(--muted);">
+                            Loading live roster...
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <button
+            class="btn"
+            onclick="loadDataFromCloud()"
+            style="margin-top:16px;"
+        >
+            Refresh Roster
+        </button>
+
+    </div>
+
 </div>
-​<div class="card">
-<div class="notice" id="editNotice">ℹ️ Existing registration found! Saving will update your choice.</div>
-<div class="field">
-<label>Your full name</label>
-<input id="userName" placeholder="Enter your full name" oninput="checkExistingUser()">
+
 </div>
-<div class="field">
-<label>Serial no.</label>
-<input id="serialNo" placeholder="e.g. 55">
-</div>
-<div class="field">
-<label>Name on back</label>
-<input id="nameOnBack" placeholder="e.g. GIRI" oninput="document.getElementById('previewName').textContent = this.value || 'NAME'">
-</div>
-<div class="field">
-<label>Boys or Girls</label>
-<div class="cat-grid">
-<div class="cat-btn selected" id="btnBoys" onclick="setGender('Boys')">Boys</div>
-<div class="cat-btn" id="btnGirls" onclick="setGender('Girls')">Girls</div>
-</div>
-</div>
-<div class="field">
-<label>Shirt size</label>
-<div class="size-grid" id="sizeGrid">
-<div class="size-pill" onclick="setSize('S')">S</div>
-<div class="size-pill" onclick="setSize('M')">M</div>
-<div class="size-pill" onclick="setSize('L')">L</div>
-<div class="size-pill selected" onclick="setSize('XL')">XL</div>
-<div class="size-pill" onclick="setSize('XXL')">XXL</div>
-<div class="size-pill" onclick="setSize('XXXL')">3XL</div>
-</div>
-</div>
-<div class="field">
-<label>Jersey Number (00–99)</label>
-<div class="numbers" id="numGrid"></div>
-</div>
-<button class="btn" onclick="saveSelection()">Save Selection</button>
-<div class="sync-status" id="syncStatus">🔄 Syncing with cloud...</div>
-</div>
-</div>
-​<div id="rosterSection" class="hidden">
-<div class="card">
-<h2>Registered Roster</h2>
-<div class="tablewrap">
-<table>
-<thead><tr><th>Serial</th><th>No.</th><th>Name</th><th>Back</th><th>Size</th><th>Cat</th><th>Action</th></tr></thead>
-<tbody id="rosterRows">
-<tr><td colspan="7" style="text-align:center; color:var(--muted);">Loading live roster...</td></tr>
-</tbody>
-</table>
-</div>
-<button class="btn" onclick="loadDataFromCloud()" style="margin-top:16px;">🔄 Refresh Roster</button>
-</div>
-</div>
-</div>
-​<script>
+
+
+<script>
+
+// =========================================
+// JSONBIN DATABASE DETAILS
+// YOUR ORIGINAL DATABASE AND API KEY
+// =========================================
+
 const BIN_ID = '6af1c19affd5d16053b373d3';
+
 const API_KEY = '2a10$6l1h70b4HguEHUnxYngrW05DmXbwscL27.q/A6sylhNWpc.VLQ55oq';
-const BIN_URL = https://api.jsonbin.io/v3/b/${BIN_ID};
-​let selectedGender = 'Boys';
+
+const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+
+
+// =========================================
+// GLOBAL VARIABLES
+// =========================================
+
+let selectedGender = 'Boys';
 let selectedSize = 'XL';
 let selectedNum = '';
+
 let registrations = [];
-​// Initialize grid immediately on load
+
+let isSaving = false;
+
+
+// =========================================
+// INITIALIZE WEBSITE
+// =========================================
+
 renderNumbers();
-​async function loadDataFromCloud(){
-try {
-const res = await fetch(BIN_URL + '/latest', {
-headers: { 'X-Master-Key': API_KEY }
-});
-if(!res.ok) throw new Error('Fetch failed');
-const data = await res.json();
-registrations = data.record.registrations || [];
-renderNumbers();
-renderRoster();
-document.getElementById('syncStatus').textContent = '✅ Live synced with cloud';
-} catch(e) {
-document.getElementById('syncStatus').textContent = '⚠️ Cloud sync warning';
-renderNumbers();
-renderRoster();
+
+
+// =========================================
+// LOAD DATA FROM CLOUD
+// =========================================
+
+async function loadDataFromCloud() {
+
+    if (isSaving) return;
+
+    try {
+
+        const res = await fetch(BIN_URL + '/latest', {
+
+            headers: {
+                'X-Master-Key': API_KEY
+            },
+
+            cache: 'no-store'
+
+        });
+
+        if (!res.ok) {
+            throw new Error('Cloud fetch failed');
+        }
+
+        const data = await res.json();
+
+        registrations = Array.isArray(data.record.registrations)
+            ? data.record.registrations
+            : [];
+
+        renderNumbers();
+
+        renderRoster();
+
+        document.getElementById('syncStatus').textContent =
+            '✅ Live synced with cloud';
+
+    } catch (error) {
+
+        document.getElementById('syncStatus').textContent =
+            '⚠️ Cloud sync warning';
+
+        renderNumbers();
+
+        renderRoster();
+
+        console.error(error);
+
+    }
+
 }
+
+
+// =========================================
+// SAVE DATA TO CLOUD
+// =========================================
+
+async function saveDataToCloud() {
+
+    document.getElementById('syncStatus').textContent =
+        '⏳ Saving to cloud...';
+
+    try {
+
+        const res = await fetch(BIN_URL, {
+
+            method: 'PUT',
+
+            headers: {
+
+                'Content-Type': 'application/json',
+
+                'X-Master-Key': API_KEY
+
+            },
+
+            body: JSON.stringify({
+
+                registrations: registrations
+
+            })
+
+        });
+
+        if (!res.ok) {
+            throw new Error('Cloud save failed');
+        }
+
+        document.getElementById('syncStatus').textContent =
+            '✅ Live synced with cloud';
+
+        return true;
+
+    } catch (error) {
+
+        document.getElementById('syncStatus').textContent =
+            '❌ Failed to save online';
+
+        console.error(error);
+
+        return false;
+
+    }
+
 }
-​async function saveDataToCloud(){
-document.getElementById('syncStatus').textContent = '⏳ Saving to cloud...';
-try {
-const res = await fetch(BIN_URL, {
-method: 'PUT',
-headers: {
-'Content-Type': 'application/json',
-'X-Master-Key': API_KEY
-},
-body: JSON.stringify({ registrations })
-});
-if(!res.ok) throw new Error('Save failed');
-document.getElementById('syncStatus').textContent = '✅ Live synced with cloud';
-} catch(e) {
-document.getElementById('syncStatus').textContent = '❌ Failed to save online';
+
+
+// =========================================
+// TAB SWITCHING
+// =========================================
+
+function switchTab(tab) {
+
+    document.getElementById('pickSection').classList.toggle(
+        'hidden',
+        tab !== 'pick'
+    );
+
+    document.getElementById('rosterSection').classList.toggle(
+        'hidden',
+        tab !== 'roster'
+    );
+
+    document.getElementById('pickTab').classList.toggle(
+        'active',
+        tab === 'pick'
+    );
+
+    document.getElementById('rosterTab').classList.toggle(
+        'active',
+        tab === 'roster'
+    );
+
+    if (tab === 'roster') {
+        loadDataFromCloud();
+    }
+
 }
+
+
+// =========================================
+// GENDER SELECTION
+// =========================================
+
+function setGender(g) {
+
+    selectedGender = g;
+
+    selectedNum = '';
+
+    document.getElementById('previewNum').textContent = '00';
+
+    document.getElementById('btnBoys').classList.toggle(
+        'selected',
+        g === 'Boys'
+    );
+
+    document.getElementById('btnGirls').classList.toggle(
+        'selected',
+        g === 'Girls'
+    );
+
+    renderNumbers();
+
 }
-​function switchTab(tab){
-document.getElementById('pickSection').classList.toggle('hidden', tab !== 'pick');
-document.getElementById('rosterSection').classList.toggle('hidden', tab !== 'roster');
-document.getElementById('pickTab').classList.toggle('active', tab === 'pick');
-document.getElementById('rosterTab').classList.toggle('active', tab === 'roster');
-if(tab === 'roster') loadDataFromCloud();
+
+
+// =========================================
+// SIZE SELECTION
+// =========================================
+
+function setSize(s) {
+
+    selectedSize = s;
+
+    document.querySelectorAll('.size-pill').forEach(el => {
+
+        const value = el.textContent === '3XL'
+            ? 'XXXL'
+            : el.textContent;
+
+        el.classList.toggle('selected', value === s);
+
+    });
+
 }
-​function setGender(g){
-selectedGender = g;
-document.getElementById('btnBoys').classList.toggle('selected', g === 'Boys');
-document.getElementById('btnGirls').classList.toggle('selected', g === 'Girls');
-renderNumbers();
+
+
+// =========================================
+// NAME PREVIEW
+// =========================================
+
+function updatePreviewName() {
+
+    const backName = document.getElementById('nameOnBack')
+        .value.trim();
+
+    const fullName = document.getElementById('userName')
+        .value.trim();
+
+    document.getElementById('previewName').textContent =
+        (backName || fullName.split(' ')[0] || 'NAME').toUpperCase();
+
 }
-​function setSize(s){
-selectedSize = s;
-document.querySelectorAll('.size-pill').forEach(el => {
-el.classList.toggle('selected', el.textContent.replace('3XL','XXXL') === s || (s==='XXXL' && el.textContent==='3XL'));
-});
+
+
+// =========================================
+// CHECK EXISTING REGISTRATION
+// =========================================
+
+function checkExistingUser() {
+
+    const name = document.getElementById('userName')
+        .value.trim().toLowerCase();
+
+    const notice = document.getElementById('editNotice');
+
+    if (name.length < 2) {
+
+        notice.style.display = 'none';
+
+        updatePreviewName();
+
+        renderNumbers();
+
+        return;
+
+    }
+
+    const existing = registrations.find(r =>
+        String(r.name || '').trim().toLowerCase() === name
+    );
+
+    if (existing) {
+
+        notice.style.display = 'block';
+
+        notice.textContent =
+            `ℹ️ Welcome back, ${existing.name}! Saving will update your choice.`;
+
+        // Load previously saved information.
+
+        document.getElementById('serialNo').value =
+            existing.serial || '';
+
+        document.getElementById('nameOnBack').value =
+            existing.backName || '';
+
+        selectedGender = existing.gender || 'Boys';
+
+        selectedSize = existing.size || 'XL';
+
+        selectedNum = String(existing.num).padStart(2, '0');
+
+        document.getElementById('previewNum').textContent =
+            selectedNum;
+
+        document.getElementById('btnBoys').classList.toggle(
+            'selected',
+            selectedGender === 'Boys'
+        );
+
+        document.getElementById('btnGirls').classList.toggle(
+            'selected',
+            selectedGender === 'Girls'
+        );
+
+        setSize(selectedSize);
+
+        updatePreviewName();
+
+    } else {
+
+        notice.style.display = 'none';
+
+        updatePreviewName();
+
+    }
+
+    renderNumbers();
+
 }
-​function checkExistingUser(){
-const name = document.getElementById('userName').value.trim().toLowerCase();
-const notice = document.getElementById('editNotice');
-if(name.length < 2){ notice.style.display = 'none'; return; }
-​const existing = registrations.find(r => r.name.toLowerCase() === name);
-if(existing){
-notice.style.display = 'block';
-notice.textContent = ℹ️ Welcome back, ${existing.name}! Saving will update your choice.;
-} else {
-notice.style.display = 'none';
+
+
+// =========================================
+// RENDER NUMBER GRID
+// BOYS AND GIRLS HAVE SEPARATE 00-99 POOLS
+// =========================================
+
+function renderNumbers() {
+
+    const grid = document.getElementById('numGrid');
+
+    if (!grid) return;
+
+    grid.innerHTML = '';
+
+    const currentName = document.getElementById('userName')
+        .value.trim().toLowerCase();
+
+    // Only check numbers belonging to the selected gender.
+
+    const takenMap = {};
+
+    registrations.forEach(r => {
+
+        if (
+            r.gender === selectedGender &&
+            String(r.name || '').trim().toLowerCase() !== currentName
+        ) {
+
+            const number = String(r.num).padStart(2, '0');
+
+            takenMap[number] = r.name;
+
+        }
+
+    });
+
+    // Generate numbers from 00 to 99.
+
+    for (let i = 0; i <= 99; i++) {
+
+        const numStr = String(i).padStart(2, '0');
+
+        const div = document.createElement('div');
+
+        const takenBy = takenMap[numStr];
+
+        if (takenBy) {
+
+            div.className = 'num taken';
+
+            const number = document.createTextNode(numStr);
+
+            const name = document.createElement('span');
+
+            name.textContent = String(takenBy).split(' ')[0];
+
+            div.append(number, name);
+
+        } else {
+
+            div.className = 'num' +
+                (selectedNum === numStr ? ' selected' : '');
+
+            div.textContent = numStr;
+
+            div.onclick = () => {
+
+                selectedNum = numStr;
+
+                document.getElementById('previewNum').textContent =
+                    numStr;
+
+                renderNumbers();
+
+            };
+
+        }
+
+        grid.appendChild(div);
+
+    }
+
 }
-​const rawName = document.getElementById('userName').value.trim();
-if(rawName && !document.getElementById('nameOnBack').value){
-document.getElementById('previewName').textContent = rawName.split(' ')[0].toUpperCase();
-}
-}
-​function renderNumbers(){
-const grid = document.getElementById('numGrid');
-if(!grid) return;
-grid.innerHTML = '';
-​const takenMap = {};
-registrations.filter(r => r.gender === selectedGender).forEach(r => {
-takenMap[r.num] = r.name;
-});
-​for(let i = 0; i <= 99; i++){
-const numStr = String(i).padStart(2, '0');
-const div = document.createElement('div');
-const takenBy = takenMap[numStr];
-const isTaken = takenBy && selectedNum !== numStr;
-​div.className = 'num ' + (isTaken ? 'taken' : (selectedNum === numStr ? 'selected' : ''));
-​if(isTaken){
-div.innerHTML = ${numStr}<span>${takenBy.split(' ')[0]}</span>;
-} else {
-div.textContent = numStr;
-div.onclick = () => {
-selectedNum = numStr;
-document.getElementById('previewNum').textContent = numStr;
-renderNumbers();
-};
-}
-grid.appendChild(div);
-}
-}
-​async function saveSelection(){
-const name = document.getElementById('userName').value.trim();
-const serial = document.getElementById('serialNo').value.trim();
-const backName = document.getElementById('nameOnBack').value.trim() || name;
-if(!name || !selectedNum){
-alert('Please fill in your name and select a jersey number.');
-return;
-}
-​registrations = registrations.filter(r => r.name.toLowerCase() !== name.toLowerCase());
-registrations.push({name, serial, backName, gender: selectedGender, size: selectedSize, num: selectedNum});
-​await saveDataToCloud();
-​alert('Jersey selection saved live!');
-document.getElementById('userName').value = '';
-document.getElementById('serialNo').value = '';
-document.getElementById('nameOnBack').value = '';
-selectedNum = '';
-document.getElementById('previewNum').textContent = '00';
-document.getElementById('previewName').textContent = 'NAME';
-document.getElementById('editNotice').style.display = 'none';
-renderNumbers();
-renderRoster();
-switchTab('roster');
-}
-​function renderRoster(){
-const tbody = document.getElementById('rosterRows');
-const badge = document.getElementById('rosterCount');
-if(badge) badge.textContent = registrations.length;
-if(!tbody) return;
-if(!registrations.length){
-tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--muted);">No one yet.</td></tr>';
-return;
-}
-tbody.innerHTML = '';
-registrations.forEach((r, idx) => {
-const tr = document.createElement('tr');
-tr.innerHTML = <td>${r.serial || '-'}</td><td><b>${r.num}</b></td><td>${r.name}</td><td>${r.backName}</td><td>${r.size}</td><td>${r.gender}</td><td><button class="btn danger" onclick="removeReg(${idx})">Release</button></td>;
-tbody.appendChild(tr);
-});
-}
-​async function removeReg(idx){
-if(confirm('Are you sure you want to release this number?')){
-registrations.splice(idx, 1);
-await saveDataToCloud();
-renderNumbers();
-renderRoster();
-}
-}
-​loadDataFromCloud();
-setInterval(loadDataFromCloud, 8000);
-</script>
-</body>
-</html>
+
+
+// =========================================
+// SAVE SELECTION
+// =========================================
+
+async function saveSelection() {
+
+    if (isSaving) return;
+
+    const name = document.getElementById('userName')
+        .value.trim();
+
+    const serial = document.getElementById('serialNo')
+        .value.trim();
+
+    const backName =
+     
