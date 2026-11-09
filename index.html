@@ -81,39 +81,38 @@ border-radius: 12px !important;
 border: 1px solid var(--border) !important;
 }
 .num {
-min-height: 50px;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-border: 1px solid var(--border);
-border-radius: 8px;
-font-weight: 700;
-font-size: 14px;
-cursor: pointer;
-background: var(--input-bg);
-color: var(--text);
-user-select: none;
+min-height: 44px !important;
+display: flex !important;
+flex-direction: column !important;
+align-items: center !important;
+justify-content: center !important;
+border: 1px solid var(--border) !important;
+border-radius: 8px !important;
+font-weight: 700 !important;
+font-size: 13px !important;
+cursor: pointer !important;
+background: var(--input-bg) !important;
+color: var(--text) !important;
 }
 .num.taken {
-background: #27272a;
-color: #71717a;
-border-color: #3f3f46;
-text-decoration: line-through;
-cursor: not-allowed;
-font-size: 12px;
+background: #27272a !important;
+color: #71717a !important;
+border-color: #3f3f46 !important;
+text-decoration: line-through !important;
+cursor: not-allowed !important;
+font-size: 11px !important;
 }
 .num.taken span {
-display: block;
-font-size: 9px;
-font-weight: 400;
-text-decoration: none;
-color: #ef4444;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
-max-width: 100%;
-padding: 0 2px;
+display: block !important;
+font-size: 8px !important;
+font-weight: 400 !important;
+text-decoration: none !important;
+color: #ef4444 !important;
+white-space: nowrap !important;
+overflow: hidden !important;
+text-overflow: ellipsis !important;
+max-width: 100% !important;
+padding: 0 2px !important;
 }
 .num.selected {
 background: var(--green) !important;
@@ -214,14 +213,14 @@ const BIN_URL = https://api.jsonbin.io/v3/b/${BIN_ID};
 let selectedSize = 'XL';
 let selectedNum = '';
 let registrations = [];
-​// Render numbers immediately upon script load
+​// Initialize grid immediately on load
 renderNumbers();
 ​async function loadDataFromCloud(){
 try {
 const res = await fetch(BIN_URL + '/latest', {
 headers: { 'X-Master-Key': API_KEY }
 });
-if(!res.ok) throw new Error('Network response failed');
+if(!res.ok) throw new Error('Fetch failed');
 const data = await res.json();
 registrations = data.record.registrations || [];
 renderNumbers();
@@ -244,7 +243,7 @@ headers: {
 },
 body: JSON.stringify({ registrations })
 });
-if(!res.ok) throw new Error('Failed to save');
+if(!res.ok) throw new Error('Save failed');
 document.getElementById('syncStatus').textContent = '✅ Live synced with cloud';
 } catch(e) {
 document.getElementById('syncStatus').textContent = '❌ Failed to save online';
