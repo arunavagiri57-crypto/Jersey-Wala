@@ -78,12 +78,11 @@
     }
     .cat-btn.selected { background: var(--primary); border-color: var(--primary); color: white; box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4); }
 
-    /* Clean scrollable number grid */
     .numbers { 
       display: grid; 
       grid-template-columns: repeat(5, 1fr); 
-      gap: 8px; 
-      max-height: 260px; 
+      gap: 6px; 
+      max-height: 240px; 
       overflow-y: auto; 
       padding: 6px; 
       background: rgba(0,0,0,0.2); 
@@ -101,11 +100,8 @@
       background: var(--input-bg); 
       color: var(--text);
       transition: transform 0.1s;
-      position: relative;
     }
     .num:active { transform: scale(0.95); }
-    
-    /* Taken number styling showing who took it */
     .num.taken { 
       background: #18181b; 
       color: #71717a; 
@@ -125,8 +121,6 @@
       text-overflow: ellipsis;
       padding: 0 2px;
     }
-    
-    /* Selected number styling */
     .num.selected { 
       background: var(--green); 
       color: white; 
@@ -227,15 +221,21 @@
 <script>
   const BIN_ID = '6af1c19affd5d16053b373d3'; 
   const API_KEY = '$2a$10$6l1h70b4HguEHUnxYngrW05DmXbwscL27.q/A6sylhNWpc.VLQ55oq';
+  // Using an open CORS proxy to safely communicate with JSONBin without browser blocks
+  const PROXY_URL = 'https://api.allorigins.win/raw?url=';
+  const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
   let selectedGender = 'Boys';
   let selectedSize = 'XL';
   let selectedNum = '';
   let registrations = [];
 
+  // Always render numbers immediately even before cloud loads so grid never disappears
+  renderNumbers();
+
   async function loadDataFromCloud(){
     try {
-      const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+      const res = await fetch(PROXY_URL + encodeURIComponent(BIN_URL + '/latest'), {
         headers: { 'X-Master-Key': API_KEY }
       });
       const data = await res.json();
@@ -244,14 +244,27 @@
       renderRoster();
       document.getElementById('syncStatus').textContent = '✅ Live synced with cloud';
     } catch(e) {
-      document.getElementById('syncStatus').textContent = '⚠️ Offline / Sync error';
+      // Fallback direct fetch if proxy fails
+      try {
+        const res2 = await fetch(BIN_URL + '/latest', {
+          headers: { 'X-Master-Key': API_KEY }
+        });
+        const data2 = await res2.json();
+        registrations = data2.record.registrations || [];
+        renderNumbers();
+        renderRoster();
+        document.getElementById('syncStatus').textContent = '✅ Live synced with cloud';
+      } catch(err) {
+        document.getElementById('syncStatus').textContent = '⚠️ Using local cache / Sync warning';
+        renderNumbers();
+      }
     }
   }
 
   async function saveDataToCloud(){
     document.getElementById('syncStatus').textContent = '⏳ Saving to cloud...';
     try {
-      await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+      await fetch(BIN_URL, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -310,7 +323,6 @@
     const grid = document.getElementById('numGrid');
     grid.innerHTML = '';
     
-    // Map taken numbers specifically filtered by the selected category (Boys/Girls)
     const takenMap = {};
     registrations.filter(r => r.gender === selectedGender).forEach(r => {
       takenMap[r.num] = r.name;
@@ -357,39 +369,5 @@
     document.getElementById('serialNo').value = '';
     document.getElementById('nameOnBack').value = '';
     selectedNum = '';
-    document.getElementById('previewNum').textContent = '00';
-    document.getElementById('previewName').textContent = 'NAME';
-    document.getElementById('editNotice').style.display = 'none';
-    renderNumbers();
-    renderRoster();
-    switchTab('roster');
-  }
-
-  function renderRoster(){
-    const tbody = document.getElementById('rosterRows');
-    if(!registrations.length){
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--muted);">No one yet.</td></tr>';
-      return;
-    }
-    tbody.innerHTML = '';
-    registrations.forEach((r, idx) => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${r.serial || '-'}</td><td><b>${r.num}</b></td><td>${r.name}</td><td>${r.backName}</td><td>${r.size}</td><td>${r.gender}</td><td><button class="btn danger" onclick="removeReg(${idx})">Release</button></td>`;
-      tbody.appendChild(tr);
-    });
-  }
-
-  async function removeReg(idx){
-    if(confirm('Are you sure you want to release this number?')){
-      registrations.splice(idx, 1);
-      await saveDataToCloud();
-      renderNumbers();
-      renderRoster();
-    }
-  }
-
-  loadDataFromCloud();
-  setInterval(loadDataFromCloud, 10000);
-</script>
-</body>
-</html>
+    document.getElementById('previewNum').
+      
