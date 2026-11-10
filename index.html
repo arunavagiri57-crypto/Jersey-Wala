@@ -531,7 +531,7 @@ function renderRoster() {
     releaseButton.type = "button";
     releaseButton.className = "btn release";
     releaseButton.textContent = "Release";
-    releaseButton.addEventListener("click", () => releaseNumber(index));
+    releaseButton.addEventListener("click", () => releaseNumber(registrations.indexOf(person)));
 
     actionCell.appendChild(releaseButton);
     row.appendChild(actionCell);
